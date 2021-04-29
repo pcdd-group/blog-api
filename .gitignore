@@ -8,3 +8,11 @@ dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
 .mvn/wrapper/maven-wrapper.jar
+
+# customize
+/.idea/
+
+*.gitignore
+/src/main/resources/application-prod.yml
+/docker-compose.yml
+

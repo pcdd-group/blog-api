@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="work.pcdd.blogApi.mapper.LoginLogMapper">
+
+    <!--删除最近几天的登录日志-->
+    <delete id="deleteByDay" parameterType="int">
+        DELETE
+        FROM login_log
+        WHERE 86400 * #{day} > now() - login_datetime
+    </delete>
+
+
+</mapper>
