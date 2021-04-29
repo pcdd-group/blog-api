@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="work.pcdd.blogApi.mapper.BlogMapper">
+
+    <resultMap id="blogAndUser" type="blog">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="title" column="title"/>
+        <result property="description" column="description"/>
+        <result property="content" column="content"/>
+        <result property="created" column="created"/>
+        <result property="status" column="status"/>
+        <!--一对一级联查询-->
+        <association property="user" javaType="user">
+            <result property="username" column="username"/>
+        </association>
+    </resultMap>
+
+    <select id="findAll" resultMap="blogAndUser">
+        select m_blog.*, m_user.username
+        from m_blog,
+             m_user
+        where m_user.id = m_blog.user_id
+        order by created desc
+    </select>
+
+
+</mapper>
