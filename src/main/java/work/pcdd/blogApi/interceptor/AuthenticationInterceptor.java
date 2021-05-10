@@ -64,10 +64,10 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
         Method method = handlerMethod.getMethod();
         log.info("执行的方法名：" + method.getName());
 
-
         // 方法有鉴权注解，进行认证
         if (method.isAnnotationPresent(RequiresRoles.class)) {
 
+            // 请求头中无token，是匿名用户
             if (!StringUtils.hasText(token)) {
                 throw new UnauthenticatedException("未登录，请先登录");
             }
