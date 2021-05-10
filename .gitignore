@@ -14,5 +14,6 @@ buildNumber.properties
 
 *.gitignore
 /src/main/resources/application-prod.yml
+/src/main/resources/application-private.yml
 /docker-compose.yml
 

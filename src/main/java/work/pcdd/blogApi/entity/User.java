@@ -28,7 +28,6 @@ import java.time.LocalDateTime;
  */
 @ApiModel("用户实体")
 @Data
-@EqualsAndHashCode(callSuper = false)
 @TableName("m_user")
 public class User implements Serializable {
 

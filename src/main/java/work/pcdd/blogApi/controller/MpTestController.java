@@ -44,14 +44,17 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
+import java.net.InetAddress;
 import java.net.URI;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 
 /**
@@ -64,6 +67,7 @@ import java.util.concurrent.ExecutorService;
  */
 
 @Api(tags = "测试接口")
+@ApiIgnore
 @RestController
 @RequestMapping("/test")
 @Transactional(rollbackFor = Exception.class)
@@ -132,6 +136,68 @@ public class MpTestController {
     @GetMapping("/fun2")
     public String fun2() {
         return "调用了fun2接口！";
+    }
+
+    @GetMapping("/jdk")
+    public Result jdkInfo() {
+        Map<String, Object> map = new HashMap<>();
+
+        try {
+            InetAddress addr = InetAddress.getLocalHost();
+            String ip = addr.getHostAddress().toString();
+            String hostName = addr.getHostName().toString();
+            Properties props = System.getProperties();
+            map.put("本机IP", ip);
+            map.put("本机名称", hostName);
+            map.put("操作系统的名称", props.getProperty("os.name"));
+            map.put("操作系统的版本", props.getProperty("os.version"));
+            map.put("操作系统的构架", props.getProperty("os.arch"));
+            map.put("Java的运行环境版本", props.getProperty("java.version"));
+            map.put("Java的运行环境供应商", props.getProperty("java.vendor"));
+            map.put("Java供应商的URL", props.getProperty("java.vendor.url"));
+            map.put("Java的安装路径", props.getProperty("java.home"));
+            map.put("Java的虚拟机规范版本", props.getProperty("java.vm.specification.version"));
+            map.put("Java的虚拟机规范供应商", props.getProperty("java.vm.specification.vendor"));
+            map.put("Java的虚拟机规范名称", props.getProperty("java.vm.specification.name"));
+            map.put("Java的虚拟机实现版本", props.getProperty("java.vm.version"));
+            map.put("Java的虚拟机实现供应商", props.getProperty("java.vm.vendor"));
+            map.put("Java的虚拟机实现名称", props.getProperty("java.vm.name"));
+
+            map.put("Java运行时环境规范版本", props.getProperty("java.specification.version"));
+            map.put("Java运行时环境规范供应商", props.getProperty("java.specification.vender"));
+            map.put("Java运行时环境规范名称", props.getProperty("java.specification.name"));
+            map.put("Java的类格式版本号", props.getProperty("java.class.version"));
+            map.put("默认的临时文件路径", props.getProperty("java.io.tmpdir"));
+            map.put("一个或多个扩展目录的路径", props.getProperty("java.ext.dirs"));
+            map.put("文件分隔符", props.getProperty("file.separator"));
+            map.put("路径分隔符", props.getProperty("path.separator"));
+            map.put("行分隔符", props.getProperty("line.separator"));
+            map.put("用户的账户名称", props.getProperty("user.name"));
+            map.put("用户的主目录", props.getProperty("user.home"));
+            map.put("用户的当前工作目录", props.getProperty("user.dir"));
+
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+
+        return Result.success(map);
+
+    }
+
+    @GetMapping("/sys")
+    public Result sysInfo() {
+        Map<String, Object> map = new HashMap<>();
+        Runtime r = Runtime.getRuntime();
+        int availableProcessors = r.availableProcessors();
+        long freeMemory = r.freeMemory();
+        long totalMemory = r.totalMemory();
+        long maxMemory = r.maxMemory();
+        map.put("可用的处理器个数", availableProcessors);
+        map.put("Java虚拟机中的可用内存量", freeMemory / Math.pow(1024, 2));
+        map.put("Java虚拟机中的内存总量", totalMemory / Math.pow(1024, 2));
+        map.put("Java虚拟机将尝试使用的最大内存量", maxMemory / Math.pow(1024, 2));
+
+        return Result.success(map);
     }
 
 }

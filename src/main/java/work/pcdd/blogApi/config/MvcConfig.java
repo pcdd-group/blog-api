@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import work.pcdd.blogApi.entity.SysLog;
 import work.pcdd.blogApi.interceptor.AuthenticationInterceptor;
 
 /**
@@ -46,4 +47,5 @@ public class MvcConfig implements WebMvcConfigurer {
     public AuthenticationInterceptor authenticationInterceptor() {
         return new AuthenticationInterceptor();
     }
+
 }

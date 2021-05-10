@@ -81,6 +81,7 @@ public class BlogController {
         System.out.println(title);
         QueryWrapper<Blog> qw = new QueryWrapper<>();
         List<Blog> list = blogService.list(qw.like("title", title));
+        System.out.println(list);
         Assert.notEmpty(list, "文章不存在");
         return Result.success(list);
     }

@@ -21,13 +21,13 @@ import java.util.Scanner;
  */
 public class CodeGenerator {
     private static final String DB_DRIVER = "com.mysql.cj.jdbc.Driver";
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/vueblog?"
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/blog_api?"
             + "useUnicode=true"
             + "&characterEncoding=utf8"
             + "&serverTimezone=Asia/Shanghai"
             + "&useSSL=true";
     private static final String DB_USERNAME = "root";
-    private static final String DB_PASSWORD = "qwe123";
+    private static final String DB_PASSWORD = "root";
 
     private static final String AUTHOR = "1907263405@qq.com";
     /**

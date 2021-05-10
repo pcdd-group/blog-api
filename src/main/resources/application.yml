@@ -6,14 +6,14 @@ server:
 
 spring:
   profiles:
-    active: dev
+    include: prod,private
 
   application:
     name: blogApi
 
   jackson:
     time-zone: GMT+8
-    date-format: yyyy-MM-dd hh:mm:ss
+    date-format: yyyy-MM-dd HH:mm:ss
     # 字段为null不返回
     default-property-inclusion: non_null
 
@@ -49,3 +49,4 @@ pcdd:
   method-expire: 30
 
   tokenHead: Authorization2
+

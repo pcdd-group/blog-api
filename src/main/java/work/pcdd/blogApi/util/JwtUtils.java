@@ -42,7 +42,7 @@ public class JwtUtils {
         Date nowDate = new Date();
 
         // 过期时间 天数转毫秒值
-        Date expireDate = new Date(nowDate.getTime() + Duration.ofDays(expire).getSeconds());
+        Date expireDate = new Date(nowDate.getTime() + Duration.ofDays(expire).getSeconds() * 1000);
 
         JWTCreator.Builder builder = JWT.create();
         try {

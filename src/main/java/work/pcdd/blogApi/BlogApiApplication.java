@@ -4,7 +4,6 @@ import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
@@ -14,6 +13,7 @@ import springfox.documentation.oas.annotations.EnableOpenApi;
 /**
  * @author pc
  */
+
 
 @EnableOpenApi
 @EnableKnife4j
