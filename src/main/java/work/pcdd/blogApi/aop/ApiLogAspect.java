@@ -47,6 +47,9 @@ public class ApiLogAspect {
     private void apiLog() {
     }
 
+    /**
+     * 前置通知
+     */
     @Before("apiLog()")
     public void doBefore(JoinPoint jp) {
         System.out.println("=====================doBefore======================");
@@ -54,6 +57,9 @@ public class ApiLogAspect {
         System.out.println("=====================doBefore======================");
     }
 
+    /**
+     * 返回通知
+     */
     @AfterReturning(pointcut = "apiLog()", returning = "result")
     public void doAfterReturning(Object result) {
         System.out.println("=====================doAfterReturning======================");
@@ -61,8 +67,12 @@ public class ApiLogAspect {
         System.out.println("=====================doAfterReturning======================");
     }
 
+    /**
+     * 环绕通知
+     * throws Throwable 的目的是让AOP中产生的异常被全局异常处理捕获
+     */
     @Around("apiLog()")
-    public Object doAround(ProceedingJoinPoint pjp) {
+    public Object doAround(ProceedingJoinPoint pjp) throws Throwable {
         System.out.println("=====================doAround======================");
         SysLog sysLog = new SysLog();
         startTime.set(System.currentTimeMillis());
@@ -84,7 +94,7 @@ public class ApiLogAspect {
             sysLog.setUsername("访客");
         }
 
-        // 获取ApiOperation的value，作为用户操作
+        // 获取@ApiOperation的value，作为用户操作
         MethodSignature signature = (MethodSignature) pjp.getSignature();
         ApiOperation annotation = signature.getMethod().getAnnotation(ApiOperation.class);
         sysLog.setOperation(annotation.value());
@@ -100,21 +110,26 @@ public class ApiLogAspect {
         // 请求时间
         sysLog.setCreateDate(LocalDateTime.now());
 
-        try {
-            Object obj = pjp.proceed();
-            log.info("{}", System.currentTimeMillis() - startTime.get());
-            sysLog.setTime(System.currentTimeMillis() - startTime.get());
+        Object obj = pjp.proceed();
+        log.info("{}", System.currentTimeMillis() - startTime.get());
+        sysLog.setTime(System.currentTimeMillis() - startTime.get());
+        log.info("{}", sysLog);
+        // 保存到sys_log表
+        sysLogService.save(sysLog);
+        System.out.println("=====================doAround======================");
 
-            log.info("{}", sysLog);
-            sysLogService.save(sysLog);
-            System.out.println("=====================doAround======================");
-            return obj;
-
-        } catch (Throwable e) {
-            e.printStackTrace();
-            return null;
-        }
-
+        return obj;
     }
+
+    /**
+     * 后置异常通知
+     */
+    @AfterThrowing(pointcut = "apiLog()", throwing = "e")
+    public void doAfterThrowing(JoinPoint jp, Exception e) {
+        System.out.println("=====================doThrows======================");
+        log.info("AOP中发生了异常,异常：{}，内容：{}", e.getClass().getSimpleName(), e.getMessage());
+        System.out.println("=====================doThrows======================");
+    }
+
 
 }
