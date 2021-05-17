@@ -11,8 +11,8 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import work.pcdd.blogApi.common.annotation.RequiresRoles;
-import work.pcdd.blogApi.common.exception.UnauthenticatedException;
-import work.pcdd.blogApi.common.exception.UnauthorizedException;
+import work.pcdd.blogApi.common.exception.MyUnauthenticatedException;
+import work.pcdd.blogApi.common.exception.MyUnauthorizedException;
 import work.pcdd.blogApi.entity.User;
 import work.pcdd.blogApi.mapper.UserMapper;
 import work.pcdd.blogApi.service.UserService;
@@ -69,7 +69,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 
             // 请求头中无token，是匿名用户
             if (!StringUtils.hasText(token)) {
-                throw new UnauthenticatedException("未登录，请先登录");
+                throw new MyUnauthenticatedException("未登录，请先登录");
             }
 
             // 校验JWT的合法性，若合法则返回JWT中的userId
@@ -96,9 +96,9 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                 return true;
             }
 
-            // 判断是否为普通用户，且权限注解的role为"user"
+            // 若普通用户调用admin接口，则抛出403异常
             if (!("user".equals(realRole) && "user".equals(annotationRole))) {
-                throw new UnauthorizedException("权限不足");
+                throw new MyUnauthorizedException("权限不足");
             }
 
             log.info("------------user授权成功！");
@@ -106,7 +106,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
         }
 
         log.info("------------未检测到此接口的权限注解，直接放行");
-        // 方法无鉴权注解，直接放行
+        // 接口无需鉴权，直接放行
         return true;
     }
 

@@ -7,9 +7,9 @@ package work.pcdd.blogApi.common.exception;
  * @author 1907263405@qq.com
  * @date 2021/3/22 22:46
  */
-public class UnauthenticatedException extends RuntimeException {
+public class MyUnauthenticatedException extends RuntimeException {
 
-    public UnauthenticatedException(String message) {
+    public MyUnauthenticatedException(String message) {
         super(message);
     }
 

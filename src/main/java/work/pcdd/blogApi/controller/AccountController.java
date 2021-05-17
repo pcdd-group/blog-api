@@ -87,7 +87,7 @@ public class AccountController {
         // 判断用户名是否正确
         Assert.notNull(user, "用户名或密码错误");
 
-        // 防止用户重复登录
+        // 判断用户是否已登录，查询redis中是否有userId
         Assert.isTrue(redisTemplate.opsForValue().get(String.valueOf(user.getId())) == null
                 , "你已登录，请勿重复登录");
 

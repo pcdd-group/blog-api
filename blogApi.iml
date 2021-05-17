@@ -11,7 +11,14 @@
       </configuration>
     </facet>
     <facet type="Spring" name="Spring">
-      <configuration />
+      <configuration>
+        <fileset id="fileset" name="Spring 应用程序上下文" removed="false">
+          <file>file://$MODULE_DIR$/src/main/java/work/pcdd/blogApi/config/RedisConfig.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/work/pcdd/blogApi/config/MvcConfig.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/work/pcdd/blogApi/config/MybatisPlusConfig.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/work/pcdd/blogApi/config/Swagger3Config.java</file>
+        </fileset>
+      </configuration>
     </facet>
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_11">

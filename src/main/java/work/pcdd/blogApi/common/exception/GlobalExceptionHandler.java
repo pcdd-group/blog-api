@@ -59,8 +59,8 @@ public class GlobalExceptionHandler {
      * 压根就没登录（例如游客）
      */
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    @ExceptionHandler(UnauthenticatedException.class)
-    public Result handler(UnauthenticatedException e) {
+    @ExceptionHandler(MyUnauthenticatedException.class)
+    public Result handler(MyUnauthenticatedException e) {
         log.error("JWT校验异常：", e);
         return Result.fail(401, e.getMessage());
     }
@@ -70,8 +70,8 @@ public class GlobalExceptionHandler {
      * 已登录，但权限不足（例如用户访问管理员的接口）
      */
     @ResponseStatus(HttpStatus.FORBIDDEN)
-    @ExceptionHandler(UnauthorizedException.class)
-    public Result handler(UnauthorizedException e) {
+    @ExceptionHandler(MyUnauthorizedException.class)
+    public Result handler(MyUnauthorizedException e) {
         log.error("JWT校验异常：", e);
         return Result.fail(403, e.getMessage());
     }
