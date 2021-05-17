@@ -17,10 +17,12 @@ import work.pcdd.blogApi.common.annotation.RequiresRoles;
 import work.pcdd.blogApi.common.vo.Result;
 import work.pcdd.blogApi.entity.LoginLog;
 import work.pcdd.blogApi.service.LoginLogService;
+import work.pcdd.blogApi.util.JwtUtils;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author 1907263405@qq.com
@@ -32,6 +34,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/login/log")
 public class LoginLogController {
+
+    @Autowired
+    JwtUtils jwtUtils;
 
     @Autowired
     LoginLogService loginLogService;
@@ -46,7 +51,7 @@ public class LoginLogController {
         Page<LoginLog> page = new Page<>(currentPage, pageSize);
         IPage<LoginLog> data = loginLogService.page(page
                 , new QueryWrapper<LoginLog>().orderByDesc("login_datetime"));
-        Assert.notNull(data,"登录日志为空");
+        Assert.notNull(data, "登录日志为空");
 
         return Result.success(data);
     }
@@ -55,7 +60,10 @@ public class LoginLogController {
     @RequiresRoles(role = "user")
     @Cacheable(key = "getMethodName()+ '/'+#id")
     @GetMapping("/{id}")
-    public Result findById(@ApiParam("用户id") @PathVariable Long id) {
+    public Result findById(@ApiParam("用户id") @PathVariable Long id, @RequestHeader("Authorization2") String token) {
+        System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&" + token);
+        // 普通用户只能查询自己的登录日志
+        Assert.isTrue(Objects.equals(jwtUtils.parseToken(token), id.toString()), "非法操作");
         List<LoginLog> loginLog = loginLogService.list(new QueryWrapper<LoginLog>().eq("user_id", id));
         Assert.notEmpty(loginLog, "登录日志不存在");
         return Result.success(loginLog);

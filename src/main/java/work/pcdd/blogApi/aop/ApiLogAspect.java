@@ -53,7 +53,7 @@ public class ApiLogAspect {
     @Before("apiLog()")
     public void doBefore(JoinPoint jp) {
         System.out.println("=====================doBefore======================");
-        log.info("前置增强");
+        log.info("前置通知");
         System.out.println("=====================doBefore======================");
     }
 
@@ -63,7 +63,7 @@ public class ApiLogAspect {
     @AfterReturning(pointcut = "apiLog()", returning = "result")
     public void doAfterReturning(Object result) {
         System.out.println("=====================doAfterReturning======================");
-        log.info("后置增强");
+        log.info("返回通知");
         System.out.println("=====================doAfterReturning======================");
     }
 
@@ -127,7 +127,7 @@ public class ApiLogAspect {
     @AfterThrowing(pointcut = "apiLog()", throwing = "e")
     public void doAfterThrowing(JoinPoint jp, Exception e) {
         System.out.println("=====================doThrows======================");
-        log.info("AOP中发生了异常,异常：{}，内容：{}", e.getClass().getSimpleName(), e.getMessage());
+        log.info("AOP中发生了异常,异常：{}，异常信息：{}", e.getClass().getSimpleName(), e.getMessage());
         System.out.println("=====================doThrows======================");
     }
 

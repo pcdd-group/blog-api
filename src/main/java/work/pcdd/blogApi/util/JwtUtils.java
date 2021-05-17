@@ -76,7 +76,7 @@ public class JwtUtils {
      * @return JWT中的userId
      */
     public String parseToken(String token) {
-        String userId = null;
+        String userId;
         try {
             // 从解密的token中获取userId
             userId = JWT.decode(token).getAudience().get(0);
