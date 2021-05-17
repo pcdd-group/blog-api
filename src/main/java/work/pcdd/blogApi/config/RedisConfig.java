@@ -80,8 +80,6 @@ public class RedisConfig {
         return redisTemplate;
     }
 
-
-
     /**
      * 注册成Bean被spring管理，如果没有这个Bean，则Redis可视化工具中的中文内容都会以二进制存储，不宜检查
      */

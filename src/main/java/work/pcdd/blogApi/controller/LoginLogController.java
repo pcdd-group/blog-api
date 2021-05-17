@@ -46,6 +46,7 @@ public class LoginLogController {
         Page<LoginLog> page = new Page<>(currentPage, pageSize);
         IPage<LoginLog> data = loginLogService.page(page
                 , new QueryWrapper<LoginLog>().orderByDesc("login_datetime"));
+        Assert.notNull(data,"登录日志为空");
 
         return Result.success(data);
     }

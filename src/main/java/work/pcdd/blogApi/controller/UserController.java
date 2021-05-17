@@ -26,6 +26,7 @@ import work.pcdd.blogApi.common.dto.ProfileDto;
 import work.pcdd.blogApi.common.vo.Result;
 import work.pcdd.blogApi.entity.User;
 import work.pcdd.blogApi.service.UserService;
+import work.pcdd.blogApi.util.JwtUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -51,6 +52,9 @@ public class UserController {
     @Autowired
     RestTemplate restTemplate;
 
+    @Autowired
+    JwtUtils jwtUtils;
+
     @Value("${pcdd.salt}")
     private String salt;
 
@@ -60,7 +64,7 @@ public class UserController {
     @GetMapping("/list")
     @Cacheable(key = "getMethodName()+'?currentPage='+#currentPage+'&pageSize='+#pageSize")
     public Result list(@ApiParam("从第几条开始查询，默认值1") @RequestParam(defaultValue = "1", name = "current") Integer currentPage
-            , @ApiParam("每页显示的条数，默认值3") @RequestParam(defaultValue = "5", name = "page") Integer pageSize) {
+            , @ApiParam("每页显示的条数，默认值10") @RequestParam(defaultValue = "10", name = "page") Integer pageSize) {
 
         System.out.println("请求数据库");
         List<User> list = userService.list();
@@ -84,11 +88,15 @@ public class UserController {
     }
 
     @ApiOperation("修改个人信息")
-    @ApiOperationSupport(order = 3, ignoreParameters = {"created","lastLogin","id"})
+    @ApiOperationSupport(order = 3, ignoreParameters = {"created", "lastLogin"})
     @RequiresRoles(role = "user")
-    @PutMapping("/edit")
+    @PutMapping("/edit}")
     @CachePut(key = "'findById'+#profileDto.id")
-    public Result edit(@Validated @RequestBody ProfileDto profileDto) {
+    public Result edit(@Validated @RequestBody ProfileDto profileDto, @RequestHeader("Authorization2") String token) {
+        String userId = jwtUtils.parseToken(token);
+        // 只能修改自己的信息：判断token中的serId和请求体中的userId是否一致，一致说明修改的是本人信息
+        Assert.isTrue(userId.equals(profileDto.getId().toString()), "非法操作");
+
         System.out.println(profileDto);
         boolean update = userService.update(new UpdateWrapper<User>()
                 .set("username", profileDto.getUsername())
@@ -160,7 +168,6 @@ public class UserController {
                 eq("id", id)), "解锁失败");
         return Result.success();
     }
-
 
 
 }

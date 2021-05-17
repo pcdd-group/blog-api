@@ -1,6 +1,7 @@
 package work.pcdd.blogApi.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
@@ -20,6 +21,7 @@ import work.pcdd.blogApi.common.vo.Result;
 import work.pcdd.blogApi.entity.Blog;
 import work.pcdd.blogApi.service.BlogService;
 import work.pcdd.blogApi.service.UserService;
+import work.pcdd.blogApi.util.JwtUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -44,6 +46,9 @@ public class BlogController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    JwtUtils jwtUtils;
 
     @ApiOperation("分页查询所有文章")
     @ApiOperationSupport(order = 1)
@@ -91,7 +96,11 @@ public class BlogController {
     @RequiresRoles(role = "user")
     @CacheEvict(allEntries = true)
     @PostMapping("/add")
-    public Result add(@Validated @RequestBody Blog blog) {
+    public Result add(@Validated @RequestBody Blog blog, @RequestHeader("Authorization2") String token) {
+        String userId = jwtUtils.parseToken(token);
+        // 只能发布自己的的文章：判断token中的serId和请求体中的userId是否一致
+        Assert.isTrue(userId.equals(blog.getUserId().toString()), "非法操作");
+
         System.out.println(blog);
 
         // 先判断用户是否存在，存在才可以发布文章
@@ -111,9 +120,20 @@ public class BlogController {
     @RequiresRoles(role = "user")
     @PutMapping("/edit")
     @CacheEvict(key = "'findById/'+#blog.id", allEntries = true)
-    public Result updateById(@Validated @RequestBody Blog blog) {
+    public Result updateById(@Validated @RequestBody Blog blog, @RequestHeader("Authorization2") String token) {
+        String userId = jwtUtils.parseToken(token);
+        // 只能更新自己的的文章：判断token中的serId和请求体中的userId是否一致
+        Assert.isTrue(userId.equals(blog.getUserId().toString()), "非法操作");
+
         Assert.notNull(blogService.getById(blog.getId()), "文章不存在或已被删除");
-        Assert.isTrue(blogService.updateById(blog), "更新失败，影响的行数为0");
+
+        Assert.isTrue(blogService.update(blog, new UpdateWrapper<Blog>()
+                .set("title", blog.getTitle())
+                .set("description", blog.getDescription())
+                .set("content", blog.getContent())
+                .eq("user_id", userId)
+                .eq("id", blog.getId())), "非法操作");
+
         return Result.success(blog);
     }
 
