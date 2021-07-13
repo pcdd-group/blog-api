@@ -1,9 +1,10 @@
 # blogAPI
 
 #### 介绍
-提供了构建博客网站的基本RESTful API（无前端），API文档见主页url 
-springboot整合redis、jwt，自定义权限注解（反射）
-
+提供了构建博客网站的基本RESTful API（无前端），内置接口文档
+使用最传统的springboot单体应用架构，整合了mybatis-plus、redis、java-jwt、aop、hibernate-validation、knife4j(前身是swagger-ui)等技术
+未使用权限框架（spring-serurity、shiro等），使用的是自定义权限注解(反射)。
+有Dockerfile、sql文件
 #### 软件架构
 软件架构说明
 
