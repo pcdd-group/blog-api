@@ -1,7 +1,7 @@
 # blogAPI
 
 #### 介绍
-纯后端，提供了构建博客网站的基本API，API文档见主页url 
+提供了构建博客网站的基本RESTful API（无前端），API文档见主页url 
 springboot整合redis、jwt，自定义权限注解（反射）
 
 #### 软件架构
