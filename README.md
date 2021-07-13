@@ -5,6 +5,8 @@
 使用最传统的springboot单体应用架构，整合了mybatis-plus、redis、java-jwt、aop、hibernate-validation、knife4j(前身是swagger-ui)等技术
 未使用权限框架（spring-serurity、shiro等），使用的是自定义权限注解(反射)。
 有Dockerfile、sql文件
+
+### 接口文档账号密码均为admin
 #### 软件架构
 软件架构说明
 
