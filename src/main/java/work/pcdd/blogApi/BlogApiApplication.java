@@ -18,7 +18,6 @@ import springfox.documentation.oas.annotations.EnableOpenApi;
 @EnableOpenApi
 @EnableKnife4j
 @EnableCaching
-@MapperScan("work.pcdd.blogApi.mapper")
 @SpringBootApplication
 public class BlogApiApplication {
 

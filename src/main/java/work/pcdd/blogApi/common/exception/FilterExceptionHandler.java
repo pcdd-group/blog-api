@@ -36,7 +36,6 @@ public class FilterExceptionHandler implements ErrorController {
         } else { // 说明是404异常，抛给全局异常处理
             throw new NoHandlerFoundException("", "", null);
         }
-
     }
 
 }
