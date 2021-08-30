@@ -35,6 +35,7 @@ public class Swagger3Config {
         return new ApiInfoBuilder()
                 .title("博客API接口文档")
                 .description("提供了构建博客网站的基本 RSETful API")
+                .termsOfServiceUrl("https://pcdd.work:8085")
                 .contact(new Contact("Du Pengcheng", "https://blog.csdn.net/weixin_43553153", "1907263405@qq.com"))
                 .version("1.0")
                 .build();

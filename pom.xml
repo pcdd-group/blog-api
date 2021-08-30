@@ -27,7 +27,6 @@
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
 
-
         <!--注释的原因是和spring cache有冲突，影响不大，以后再解决-->
         <!--热部署-->
         <dependency>
@@ -95,7 +94,7 @@
             <version>3.13.0</version>
         </dependency>
 
-        <!--接口文档UI增强-->
+        <!--接口文档-->
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>knife4j-spring-boot-starter</artifactId>
@@ -125,9 +124,6 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-
-
-
 
     </dependencies>
 

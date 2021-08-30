@@ -73,7 +73,7 @@ public class CodeGenerator {
 
         // 包配置
         PackageConfig pc = new PackageConfig();
-        pc.setModuleName(null);
+        pc.setModuleName("");
         pc.setParent(PARENT);
         mpg.setPackageInfo(pc);
 
