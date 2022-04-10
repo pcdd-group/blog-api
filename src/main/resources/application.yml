@@ -6,20 +6,19 @@ server:
 
 spring:
   profiles:
-    include: dev,private
+    include: prod,private
 
   application:
-    name: blogApi
+    name: blogapi
 
   jackson:
     time-zone: GMT+8
     date-format: yyyy-MM-dd HH:mm:ss
-    # 字段为null不返回
-    default-property-inclusion: non_null
+    default-property-inclusion: non_null #字段为null不返回
 
 mybatis-plus:
   mapper-locations: classpath*:/mapper/**/*.xml
-  type-aliases-package: work.pcdd.blogApi.entity
+  type-aliases-package: work.pcdd.blogapi.entity
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
@@ -35,18 +34,13 @@ knife4j:
 pcdd:
   # token密钥
   secret: ae9f487aaf0440fa8a69a7bece8f7573
-
   # 用户密码加密盐值
   salt: $2020#9#6$
-
   # token有效期（单位：天）
   token-expire: 7
-
   # refreshToken有效期(单位：天)，作用是防止用户重复登录
   refresh-token-expire: 5
-
   # 方法缓存有效期(单位：天)（加了@Cacheable等注解的方法）
   method-expire: 30
-
-  tokenHead: Authorization2
+  tokenHeader: Authorization2
 
