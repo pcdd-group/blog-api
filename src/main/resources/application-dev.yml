@@ -1,3 +1,12 @@
+server:
+  # 配置接口为https，部署后方可生效，本地不会显示
+  ssl:
+    key-store: classpath:pcdd.work.jks
+    key-store-password: 2m6163u80ah
+    key-store-type: JKS
+  http2:
+    enabled: true
+
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -11,7 +20,7 @@ spring:
 
   redis:
     database: 15
-    host: 127.0.0.1
+    host: 192.168.22.133
     port: 6379
     password: root
     # 连接超时时间（毫秒）

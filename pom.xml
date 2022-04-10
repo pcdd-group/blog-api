@@ -3,9 +3,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>work.pcdd</groupId>
-    <artifactId>blogApi</artifactId>
+    <artifactId>blog-api</artifactId>
     <version>1.0</version>
-    <name>blogApi</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
@@ -13,6 +12,13 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <spring-boot.version>2.4.1</spring-boot.version>
+
+        <!--服务器ip-->
+        <ip.tencent>124.221.158.211</ip.tencent>
+        <!-- docker地址 -->
+        <docker.host.tencent>https://${ip.tencent}:2376</docker.host.tencent>
+        <!-- docker ssl证书目录 -->
+        <docker.cert.tencent>E:\MyCode\JavaProject\kanxiaoshuo-cloud\docker\cert\tencent</docker.cert.tencent>
     </properties>
 
     <dependencies>
@@ -25,15 +31,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
-        </dependency>
-
-        <!--注释的原因是和spring cache有冲突，影响不大，以后再解决-->
-        <!--热部署-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <scope>runtime</scope>
-            <optional>true</optional>
         </dependency>
 
         <!--实体校验-->
@@ -125,6 +122,7 @@
             <scope>test</scope>
         </dependency>
 
+
     </dependencies>
 
     <dependencyManagement>
@@ -156,7 +154,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>2.4.1</version>
                 <configuration>
-                    <mainClass>work.pcdd.blogApi.BlogApiApplication</mainClass>
+                    <mainClass>work.pcdd.blogapi.BlogApiApplication</mainClass>
                 </configuration>
                 <executions>
                     <execution>
@@ -166,6 +164,33 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>0.39.1</version>
+                <configuration>
+                    <verbose>true</verbose>
+                    <dockerHost>${docker.host.tencent}</dockerHost>
+                    <certPath>${docker.cert.tencent}</certPath>
+                    <images>
+                        <image>
+                            <!--镜像名:版本号-->
+                            <name>${project.artifactId}:${project.version}</name>
+                            <!--别名:用于容器命名和在docker-compose.yml文件只能找到对应名字的配置-->
+                            <alias>${project.name}</alias>
+                            <build>
+                                <!--Dockerfile所在路径-->
+                                <dockerFile>${project.basedir}/Dockerfile</dockerFile>
+                            </build>
+                            <run>
+                                <ports>
+                                    <port>9333:8181</port>
+                                </ports>
+                            </run>
+                        </image>
+                    </images>
+                </configuration>
             </plugin>
         </plugins>
     </build>

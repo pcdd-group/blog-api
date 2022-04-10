@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="work.pcdd.blogApi.mapper.BlogMapper">
+<mapper namespace="work.pcdd.blogapi.mapper.BlogMapper">
 
     <resultMap id="blogAndUser" type="blog">
         <id property="id" column="id"/>
@@ -19,7 +19,7 @@
     <select id="findAll" resultMap="blogAndUser">
         select m_blog.*, m_user.username
         from m_blog,
-             m_user
+        m_user
         where m_user.id = m_blog.user_id
         order by created desc
     </select>
