@@ -186,7 +186,7 @@ CREATE TABLE `m_user`  (
 -- ----------------------------
 -- Records of m_user
 -- ----------------------------
-INSERT INTO `m_user` VALUES (1, 'admin', 'https://image-1300566513.cos.ap-guangzhou.myqcloud.com/upload/images/5a9f48118166308daba8b6da7e466aab.jpg', '1907263405@qq.com', '0cfac8931b3ebec3fb6aec9636e33271', 1, 'admin', '2000-08-30 22:59:00', '2021-05-10 15:23:09');
+INSERT INTO `m_user` VALUES (1, 'admin', 'https://image-1300566513.cos.ap-guangzhou.myqcloud.com/upload/images/5a9f48118166308daba8b6da7e466aab.jpg', 'xxx@xx.com', '0cfac8931b3ebec3fb6aec9636e33271', 1, 'admin', '2000-08-30 22:59:00', '2021-05-10 15:23:09');
 INSERT INTO `m_user` VALUES (2, 'disable', '', '2', '0cfac8931b3ebec3fb6aec9636e33271', 0, 'user', '2021-02-23 20:58:02', '2021-02-23 20:58:06');
 INSERT INTO `m_user` VALUES (3, 'ad', 'https://public-1300393241.cos.ap-beijing.myqcloud.com/qjl.png', '12345@qq.com', '0cfac8931b3ebec3fb6aec9636e33271', 1, 'admin', '2021-03-07 00:31:05', NULL);
 INSERT INTO `m_user` VALUES (4, '工具人1号', NULL, NULL, '0cfac8931b3ebec3fb6aec9636e33271', 1, 'user', '2020-01-13 19:16:43', NULL);
