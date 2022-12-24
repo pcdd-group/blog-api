@@ -12,8 +12,6 @@ import springfox.documentation.oas.annotations.EnableOpenApi;
 /**
  * @author pc
  */
-
-
 @EnableOpenApi
 @EnableKnife4j
 @EnableCaching

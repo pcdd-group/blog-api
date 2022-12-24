@@ -14,7 +14,7 @@
         <spring-boot.version>2.4.1</spring-boot.version>
 
         <!--服务器ip-->
-        <ip.tencent>124.221.158.211</ip.tencent>
+        <ip.tencent>your ip</ip.tencent>
         <!-- docker地址 -->
         <docker.host.tencent>https://${ip.tencent}:2376</docker.host.tencent>
         <!-- docker ssl证书目录 -->
